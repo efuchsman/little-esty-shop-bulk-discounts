@@ -84,7 +84,7 @@ RSpec.describe Invoice, type: :model do
     describe 'total_revenue_to_dollars' do
       it 'converts total_revenue from cents to dollars' do
 
-      expect(@invoice_1.total_revenue_to_dollars).to eq(1.8)
+        expect(@invoice_1.total_revenue_to_dollars).to eq(1.8)
       end
     end
   end
