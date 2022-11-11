@@ -68,7 +68,7 @@ RSpec.describe Invoice, type: :model do
       @invoice_1 = Invoice.create!(customer_id: @customer_1.id, status: 1)
       @ii_1 = InvoiceItem.create!(invoice_id: @invoice_1.id, item_id: @item_1.id, quantity: 9, unit_price: 10,
                                  status: 1)
-      @ii_1 = InvoiceItem.create!(invoice_id: @invoice_1.id, item_id: @item_2.id, quantity: 9, unit_price: 10,
+      @ii_2 = InvoiceItem.create!(invoice_id: @invoice_1.id, item_id: @item_2.id, quantity: 11, unit_price: 10,
                                  status: 1)
       @transaction_1 = Transaction.create!(credit_card_number: '1', result: 0, invoice_id: @invoice_1.id)
       @transaction_2 = Transaction.create!(credit_card_number: '1', result: 0, invoice_id: @invoice_1.id)
@@ -77,14 +77,14 @@ RSpec.describe Invoice, type: :model do
     describe '#total_revenue' do
       it 'totals revenue from all invoice items' do
 
-        expect(@invoice_1.total_revenue).to eq(180)
+        expect(@invoice_1.total_revenue).to eq(200)
       end
     end
 
     describe 'total_revenue_to_dollars' do
       it 'converts total_revenue from cents to dollars' do
 
-        expect(@invoice_1.total_revenue_to_dollars).to eq(1.8)
+        expect(@invoice_1.total_revenue_to_dollars).to eq(2.0)
       end
     end
   end

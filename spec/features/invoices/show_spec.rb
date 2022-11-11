@@ -14,9 +14,9 @@ RSpec.describe 'Merchant Invoice Show Page' do
     @invoice1 = Invoice.create!(status: 'completed', customer_id: @customer1.id, created_at: Time.parse('19.07.18'))
     @invoice2 = Invoice.create!(status: 'completed', customer_id: @customer1.id, created_at: '2010-03-11 01:51:45')
 
-    InvoiceItem.create!(quantity: 5, unit_price: 8025, status: 'packaged', item_id: @item1.id, invoice_id: @invoice1.id)
-    InvoiceItem.create!(quantity: 15, unit_price: 12053, status: 'packaged', item_id: @item2.id, invoice_id: @invoice1.id)
-    InvoiceItem.create!(quantity: 50, unit_price: 800, status: 'shipped', item_id: @item3.id, invoice_id: @invoice2.id)
+    @ii1= InvoiceItem.create!(quantity: 5, unit_price: 8025, status: 'packaged', item_id: @item1.id, invoice_id: @invoice1.id)
+    @ii2 = InvoiceItem.create!(quantity: 15, unit_price: 12053, status: 'packaged', item_id: @item2.id, invoice_id: @invoice1.id)
+    @ii3 = InvoiceItem.create!(quantity: 50, unit_price: 800, status: 'shipped', item_id: @item3.id, invoice_id: @invoice2.id)
   end
 
   describe 'As a merchant' do
@@ -33,14 +33,14 @@ RSpec.describe 'Merchant Invoice Show Page' do
       it 'Then I see all of my items on the invoice including: Item name, The quantity of the item ordered, The price the Item sold for, The Invoice Item status, And I do not see any information related to Items for other merchants' do
         visit "/merchants/#{@merchant1.id}/invoices/#{@invoice1.id}"
 
-        within("#item-#{@item2.id}") do
+        within("#i_item-#{@ii2.id}") do
           expect(page).to have_content("Name: #{@item2.name}")
           expect(page).to have_content("Price: $120.53")
           expect(page).to have_content('Quantity: 15')
           expect(page).to have_content('Status: packaged')
         end
 
-        within("#item-#{@item1.id}") do
+        within("#i_item-#{@ii1.id}") do
           expect(page).to have_content("Name: #{@item1.name}")
           expect(page).to have_content("Price: $80.25")
           expect(page).to have_content('Quantity: 5')
@@ -61,40 +61,50 @@ RSpec.describe 'Merchant Invoice Show Page' do
       it 'has a select field with current status that can be changed to update status' do
         visit "/merchants/#{@merchant1.id}/invoices/#{@invoice1.id}"
 
-        within("#item-#{@item1.id}") do
+        within("#i_item-#{@ii1.id}") do
           expect(page).to have_selector(:css, 'form')
-          expect(find('form')).to have_content("#{@item1.invoice_items.first.status}")
-          expect(@item1.invoice_items.first.status).to eq('packaged')
+          expect(find('form')).to have_content("#{@ii1.status}")
+          expect(@ii1.status).to eq('packaged')
 
           expect(page).to have_button('Update Item Status')
 
           select('shipped', from: 'Status')
           click_button('Update Item Status')
 
-          expect(current_path).to eq("/merchants/#{@merchant1.id}/invoices/#{@invoice1.id}")
-          expect(@item1.invoice_items.first.status).to eq('shipped')
+        end
+
+        expect(current_path).to eq("/merchants/#{@merchant1.id}/invoices/#{@invoice1.id}")
+
+        within("#i_item-#{@ii1.id}") do
+          expect(page).to have_content("Status: shipped")
           expect(find('form')).to have_content('shipped')
         end
 
-        within("#item-#{@item2.id}") do
+        within("#i_item-#{@ii2.id}") do
           expect(page).to have_selector(:css, 'form')
-          expect(find('form')).to have_content("#{@item2.invoice_items.first.status}")
-          expect(@item2.invoice_items.first.status).to eq('packaged')
+          expect(find('form')).to have_content("#{@ii2.status}")
+          expect(page).to have_content("Status: packaged")
 
           expect(page).to have_button('Update Item Status')
 
           select('pending', from: 'Status')
           click_button('Update Item Status')
+        end
 
-          expect(current_path).to eq("/merchants/#{@merchant1.id}/invoices/#{@invoice1.id}")
-          expect(@item2.invoice_items.first.status).to eq('pending')
+        expect(current_path).to eq("/merchants/#{@merchant1.id}/invoices/#{@invoice1.id}")
+
+        within("#i_item-#{@ii2.id}") do
+          expect(page).to have_content("Status: pending")
           expect(find('form')).to have_content('pending')
 
           select('packaged', from: 'Status')
           click_button('Update Item Status')
+        end
 
-          expect(current_path).to eq("/merchants/#{@merchant1.id}/invoices/#{@invoice1.id}")
-          expect(@item2.invoice_items.first.status).to eq('packaged')
+        expect(current_path).to eq("/merchants/#{@merchant1.id}/invoices/#{@invoice1.id}")
+
+        within("#i_item-#{@ii2.id}") do
+          expect(page).to have_content("Status: packaged")
           expect(find('form')).to have_content('packaged')
         end
       end
