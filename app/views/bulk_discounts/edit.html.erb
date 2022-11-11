@@ -1,0 +1,13 @@
+<h2><%= "Edit #{@bulk_discount.name}" %></h2>
+
+  <div id= "update_discount">
+    <%= form_with model: @bulk_discount, url: merchant_bulk_discount_path(@merchant, @bulk_discount), local: true do |form| %>
+      <%= form.label "Name:" %>
+      <%= form.text_field :name %>
+      <%= form.label "Discount percentage:" %>
+      <%= form.number_field :percentage %>
+      <%= form.label "Quantity required:"%>
+      <%= form.number_field :quantity_threshold %>
+      <%= form.submit "Update Discount" %>
+    <% end %>
+  </div>

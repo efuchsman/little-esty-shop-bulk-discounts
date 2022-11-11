@@ -1,6 +1,6 @@
 class BulkDiscountsController < ApplicationController
   before_action :find_merchant, only: [:index, :new, :create]
-  before_action :find_discount_and_merchant, only: [:destroy, :show]
+  before_action :find_discount_and_merchant, only: [:destroy, :show, :edit, :update]
 
   def index
     @bulk_discounts = @merchant.bulk_discounts
@@ -24,8 +24,21 @@ class BulkDiscountsController < ApplicationController
     end
   end
 
+  def edit
+  end
+
+  def update
+    if @bulk_discount.update(bulk_discount_params)
+      redirect_to merchant_bulk_discount_path(@merchant, @bulk_discount)
+      flash[:message] = 'Information successfully updated'
+    else
+      redirect_to edit_merchant_bulk_discount_path(@merchant, @bulk_discount)
+      flash[:error] = 'Required content missing or number input(s) are invalid'
+    end
+  end
+
   def destroy
-    @discount.destroy
+    @bulk_discount.destroy
     redirect_to merchant_bulk_discounts_path(@merchant)
   end
 
@@ -35,7 +48,12 @@ class BulkDiscountsController < ApplicationController
 
   def find_discount_and_merchant
     @merchant = Merchant.find(params[:merchant_id])
-    @discount = @merchant.bulk_discounts.find(params[:id])
+    @bulk_discount = @merchant.bulk_discounts.find(params[:id])
+  end
+
+  private
+  def bulk_discount_params
+    params.require(:bulk_discount).permit(:name, :percentage, :quantity_threshold)
   end
 
 
