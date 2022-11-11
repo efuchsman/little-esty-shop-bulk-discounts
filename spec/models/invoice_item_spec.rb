@@ -46,5 +46,12 @@ RSpec.describe InvoiceItem, type: :model do
         expect(@ii_2.discount?).to be false
       end
     end
+
+    describe "#return_available_discounts" do
+      it 'returns the available discounts for a bulk purchase' do
+        discount2 = BulkDiscount.create!(name: "Test2", percentage: 8, quantity_threshold: 8, merchant: @merchant)
+        expect(@ii_1.return_available_discounts).to eq([@discount1, discount2])
+      end
+    end
   end
 end
