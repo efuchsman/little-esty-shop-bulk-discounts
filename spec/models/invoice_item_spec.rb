@@ -20,16 +20,30 @@ RSpec.describe InvoiceItem, type: :model do
 
     before :each do
       @customer_1 = Customer.create!(first_name: 'Eli', last_name: 'Fuchsman')
+
       @merchant = Merchant.create!(name: 'Test')
+
+      @discount1 = BulkDiscount.create!(name: "Test1", percentage: 10, quantity_threshold: 10, merchant: @merchant)
+
       @item_1 = Item.create!(name: 'item1', description: 'desc1', unit_price: 12053, merchant_id: @merchant.id)
+      @item_2 = Item.create!(name: 'item2', description: 'desc1', unit_price: 11000, merchant_id: @merchant.id)
+
       @invoice_1 = Invoice.create!(customer_id: @customer_1.id, status: 1)
-      @ii_1 = InvoiceItem.create!(invoice_id: @invoice_1.id, item_id: @item_1.id, quantity: 9, unit_price: 12053,
-        status: 1)
+
+      @ii_1 = InvoiceItem.create!(invoice_id: @invoice_1.id, item_id: @item_1.id, quantity: 10, unit_price: 12053, status: 1)
+      @ii_2 = InvoiceItem.create!(invoice_id: @invoice_1.id, item_id: @item_2.id, quantity: 6, unit_price: 11000, status: 1)
     end
 
     describe "#unit_price_to_dollars" do
       it "converts cents to dollars" do
         expect(@ii_1.unit_price_to_dollars).to eq(120.53)
+      end
+    end
+
+    describe "#discount?" do
+      it "returns true if an invoice item meets a discount quantity threshold" do
+        expect(@ii_1.discount?).to be true
+        expect(@ii_2.discount?).to be false
       end
     end
   end

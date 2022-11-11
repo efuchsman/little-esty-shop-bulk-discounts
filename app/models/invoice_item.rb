@@ -12,4 +12,9 @@ class InvoiceItem < ApplicationRecord
   def unit_price_to_dollars
     (unit_price.to_f/100.00).round(2)
   end
+
+
+  def discount?
+    bulk_discounts.order(percentage: :desc).where("quantity_threshold <= #{self.quantity}").first.exists?
+  end
 end
