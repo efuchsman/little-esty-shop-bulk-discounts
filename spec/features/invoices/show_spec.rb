@@ -7,15 +7,15 @@ RSpec.describe 'Merchant Invoice Show Page' do
 
     @customer1 = Customer.create!(first_name: 'Peter', last_name: 'Parker')
 
-    @item1 = Item.create!(name: 'Beanie Babies', description: 'Investments', unit_price: 100, merchant_id: @merchant1.id)
-    @item2 = Item.create!(name: 'Bat-A-Rangs', description: 'Weapons', unit_price: 100, merchant_id: @merchant1.id)
+    @item1 = Item.create!(name: 'Beanie Babies', description: 'Investments', unit_price: 8025, merchant_id: @merchant1.id)
+    @item2 = Item.create!(name: 'Bat-A-Rangs', description: 'Weapons', unit_price: 12053, merchant_id: @merchant1.id)
     @item3 = Item.create!(name: 'Bat Mask', description: 'Identity Protection', unit_price: 800, merchant_id: @merchant2.id)
 
     @invoice1 = Invoice.create!(status: 'completed', customer_id: @customer1.id, created_at: Time.parse('19.07.18'))
     @invoice2 = Invoice.create!(status: 'completed', customer_id: @customer1.id, created_at: '2010-03-11 01:51:45')
 
-    InvoiceItem.create!(quantity: 5, unit_price: 100, status: 'packaged', item_id: @item1.id, invoice_id: @invoice1.id)
-    InvoiceItem.create!(quantity: 15, unit_price: 100, status: 'packaged', item_id: @item2.id, invoice_id: @invoice1.id)
+    InvoiceItem.create!(quantity: 5, unit_price: 8025, status: 'packaged', item_id: @item1.id, invoice_id: @invoice1.id)
+    InvoiceItem.create!(quantity: 15, unit_price: 12053, status: 'packaged', item_id: @item2.id, invoice_id: @invoice1.id)
     InvoiceItem.create!(quantity: 50, unit_price: 800, status: 'shipped', item_id: @item3.id, invoice_id: @invoice2.id)
   end
 
@@ -35,14 +35,14 @@ RSpec.describe 'Merchant Invoice Show Page' do
 
         within("#item-#{@item2.id}") do
           expect(page).to have_content("Name: #{@item2.name}")
-          expect(page).to have_content("Price: #{@item2.unit_price}")
+          expect(page).to have_content("Price: $120.53")
           expect(page).to have_content('Quantity: 15')
           expect(page).to have_content('Status: packaged')
         end
 
         within("#item-#{@item1.id}") do
           expect(page).to have_content("Name: #{@item1.name}")
-          expect(page).to have_content("Price: #{@item1.unit_price}")
+          expect(page).to have_content("Price: $80.25")
           expect(page).to have_content('Quantity: 5')
           expect(page).to have_content('Status: packaged')
         end
@@ -54,7 +54,7 @@ RSpec.describe 'Merchant Invoice Show Page' do
         visit "/merchants/#{@merchant1.id}/invoices/#{@invoice1.id}"
 
         within('#total_invoice_revenue') do
-          expect(page).to have_content('Total Invoice Revenue: $20')
+          expect(page).to have_content('Total Invoice Revenue: $2209.2')
         end
       end
 
