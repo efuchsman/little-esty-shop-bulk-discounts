@@ -1,11 +1,13 @@
 <h2><%= "#{@merchant.name} Discount Index" %></h2>
-<p><%= link_to 'Create a Discount', new_merchant_bulk_discount_path(@merchant) %></p>
+<p>• <%= link_to 'Create a Discount', new_merchant_bulk_discount_path(@merchant) %> •</p>
 
 <% @bulk_discounts.each do |discount| %>
   <div id="discount-<%= discount.id %>">
     <p><b>Name: </b><%= discount.name %></p>
     <p><b>Deal: </b><%= "#{discount.percentage}% off" %></p>
     <p><b>Quantity Required: </b><%= discount.quantity_threshold %></p>
-      <p><%= link_to "Visit", merchant_bulk_discount_path(@merchant, discount) %></p>
+      <p>• <%= link_to "Visit", merchant_bulk_discount_path(@merchant, discount) %> •</p>
+      <p><%= button_to "Delete This Discount", {:controller => :bulk_discounts, :action => 'destroy', :id => discount.id }, :method => :delete %></p>
+      ______________________________
   </div>
 <% end %>
