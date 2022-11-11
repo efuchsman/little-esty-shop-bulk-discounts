@@ -1,4 +1,5 @@
 <h2><%= "#{@merchant.name} Discount Index" %></h2>
+<p><%= link_to 'Create a Discount', new_merchant_bulk_discount_path(@merchant) %></p>
 
 <% @bulk_discounts.each do |discount| %>
   <div id="discount-<%= discount.id %>">
