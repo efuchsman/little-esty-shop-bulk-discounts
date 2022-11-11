@@ -51,6 +51,28 @@ RSpec.describe InvoiceItem, type: :model do
       it 'returns the available discounts for a bulk purchase' do
         discount2 = BulkDiscount.create!(name: "Test2", percentage: 8, quantity_threshold: 8, merchant: @merchant)
         expect(@ii_1.return_available_discounts).to eq([@discount1, discount2])
+        expect(@ii_2.return_available_discounts).to be nil
+      end
+    end
+
+    describe "#return_best_discount" do
+      it 'returns the best available discount for a bulk purchase' do
+        discount2 = BulkDiscount.create!(name: "Test2", percentage: 8, quantity_threshold: 8, merchant: @merchant)
+
+        expect(@ii_1.return_best_discount).to eq(@discount1)
+        expect(@ii_2.return_best_discount).to be nil
+      end
+    end
+
+    describe "#invoice_item_revenue" do
+      it "returns revenue from the invoice item and can account for a discount" do
+        ii_3 = InvoiceItem.create!(invoice_id: @invoice_1.id, item_id: @item_2.id, quantity: 9, unit_price: 9575, status: 1)
+
+        discount2 = BulkDiscount.create!(name: "Test2", percentage: 8, quantity_threshold: 8, merchant: @merchant)
+
+        expect(@ii_1.invoice_item_revenue).to eq(1084.77)
+        expect(@ii_2.invoice_item_revenue).to eq(660.0)
+        expect(ii_3.invoice_item_revenue).to eq(792.81)
       end
     end
   end
