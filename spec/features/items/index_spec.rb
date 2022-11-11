@@ -183,11 +183,11 @@ RSpec.describe 'Merchant Items Index Page' do
           expect(page).to have_link("#{@item3.name}")
           expect(page).to have_link("#{@item5.name}")
 
-          expect(page).to have_content(@merchant1.top_items_by_revenue[0].item_revenue)
-          expect(page).to have_content(@merchant1.top_items_by_revenue[1].item_revenue)
-          expect(page).to have_content(@merchant1.top_items_by_revenue[2].item_revenue)
-          expect(page).to have_content(@merchant1.top_items_by_revenue[3].item_revenue)
-          expect(page).to have_content(@merchant1.top_items_by_revenue[4].item_revenue)
+          expect(page).to have_content("Total Revenue: $#{((@merchant1.top_items_by_revenue[0].item_revenue.to_f)/100).round(2)}")
+          expect(page).to have_content("Total Revenue: $#{((@merchant1.top_items_by_revenue[1].item_revenue.to_f)/100).round(2)}")
+          expect(page).to have_content("Total Revenue: $#{((@merchant1.top_items_by_revenue[2].item_revenue.to_f)/100).round(2)}")
+          expect(page).to have_content("Total Revenue: $#{((@merchant1.top_items_by_revenue[3].item_revenue.to_f)/100).round(2)}")
+          expect(page).to have_content("Total Revenue: $#{((@merchant1.top_items_by_revenue[4].item_revenue.to_f)/100).round(2)}")
         end
       end
 
