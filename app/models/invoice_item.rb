@@ -34,7 +34,7 @@ class InvoiceItem < ApplicationRecord
   end
 
   def invoice_item_revenue
-     if return_available_discounts.nil?
+    if return_available_discounts.nil?
       (quantity * unit_price_to_dollars).round(2)
     else
       ((quantity * unit_price_to_dollars)*(1 -(return_best_discount.percentage.to_f/100))).round(2)

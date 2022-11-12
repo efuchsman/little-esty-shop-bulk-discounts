@@ -4,6 +4,7 @@ RSpec.describe 'Merchant Invoice Show Page' do
   before :each do
     @merchant1 = Merchant.create!(name: 'Marvel')
     @merchant2 = Merchant.create!(name: 'Honey Bee', status: 'enabled')
+    @discount1 = BulkDiscount.create!(name: "Test1", percentage: 10, quantity_threshold: 10, merchant: @merchant1)
 
     @customer1 = Customer.create!(first_name: 'Peter', last_name: 'Parker')
 
@@ -106,6 +107,18 @@ RSpec.describe 'Merchant Invoice Show Page' do
         within("#i_item-#{@ii2.id}") do
           expect(page).to have_content("Status: packaged")
           expect(find('form')).to have_content('packaged')
+        end
+      end
+
+      it "And I see the total discounted revenue for my merchant from this invoice which includes bulk discounts in the calculation" do
+        visit "/merchants/#{@merchant1.id}/invoices/#{@invoice1.id}"
+
+        within('#total_invoice_revenue') do
+          expect(page).to have_content('Total Invoice Revenue: $2209.2')
+        end
+
+        within('#discounted_invoice_revenue') do
+          expect(page).to have_content('Discounted Invoice Revenue: $2028.41')
         end
       end
     end

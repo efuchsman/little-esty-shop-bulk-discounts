@@ -21,4 +21,8 @@ class Invoice < ApplicationRecord
       .where('invoice_items.status=0 OR invoice_items.status=1')
       .order(:created_at)
   end
+
+  def discounted_invoice_revenue
+    invoice_items.sum(&:invoice_item_revenue).round(2)
+  end
 end
