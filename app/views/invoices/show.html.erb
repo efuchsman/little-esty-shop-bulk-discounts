@@ -4,16 +4,16 @@
 <p><b>Customer: </b><%= @invoice.customer.full_name %></p>
 
 <h2>Items: </h2>
-<% @items.each do |item| %>
-  <div id="item-<%= item.id %>">
-    <p><b>Name: </b><%= item.name %></p>
-    <p><b>Price: </b><%= "#{item.unit_price}¢" %></p>
-    <p><b>Quantity: </b><%= item.invoice_items.first.quantity %></p>
-    <p><b>Status: </b><%= item.invoice_items.first.status %><br>
+<% @invoice.invoice_items.each do |ii| %>
+  <div id="i_item-<%= ii.id %>">
+    <p><b>Name: </b><%= ii.item.name %></p>
+    <p><b>Price: </b><%= "$#{ii.unit_price_to_dollars}" %></p>
+    <p><b>Quantity: </b><%= ii.quantity %></p>
+    <p><b>Status: </b><%= ii.status %><br>
     <%= form_with url: merchant_invoice_path(@merchant, @invoice), method: :patch, local: true do |f| %>
-    <%= f.hidden_field :invoice_item_id, value: item.invoice_items.first.id %>
+    <%= f.hidden_field :invoice_item_id, value: ii.id %>
     <%= f.label :status %><br>
-    <%= f.select :status, item.invoice_items.statuses.keys, :selected => item.invoice_items.first.status %>
+    <%= f.select :status, InvoiceItem.statuses.keys, selected: "#{ii.status}" %>
     <%= f.submit 'Update Item Status'%>
 <% end %></p>
   </div>
@@ -22,4 +22,8 @@
 
 <div id="total_invoice_revenue">
   <p><b>Total Invoice Revenue: </b>$<%= "#{@invoice.total_revenue_to_dollars}"%>
+</div>
+
+<div id= "discounted_invoice_revenue">
+  <p><b>Discounted Invoice Revenue: </b><%= "$#{@invoice.discounted_invoice_revenue}" %></p>
 </div>

@@ -4,7 +4,7 @@
   <h3>Top 5 Most Popular Items by Revenue:</h3>
     <ol>
       <% @merchant.top_items_by_revenue.each do |item| %>
-          <li><b><%= link_to "#{item.name}", "/merchants/#{@merchant.id}/items/#{item.id}" %></b> <br> Total Revenue: <%= item.item_revenue %><br> Top selling date was: <%= item.top_item_selling_date %></li>
+          <li><b><%= link_to "#{item.name}", "/merchants/#{@merchant.id}/items/#{item.id}" %></b> <br> Total Revenue: <%= "$#{(item.item_revenue.to_f/100.00).round(2)}" %><br> Top selling date was: <%= item.top_item_selling_date %></li>
       <% end %>
     </ol>
 </div>

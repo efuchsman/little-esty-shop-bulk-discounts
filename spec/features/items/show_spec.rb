@@ -33,7 +33,7 @@ RSpec.describe 'Merchant Items Show Page' do
 
         expect(page).to have_content("Name: #{@item1.name}")
         expect(page).to have_content("Description: #{@item1.description}")
-        expect(page).to have_content("Current Selling Price: $#{@item1.unit_price}")
+        expect(page).to have_content("Current Selling Price: $#{@item1.item_unit_price_to_dollars}")
       end
     end
   end
