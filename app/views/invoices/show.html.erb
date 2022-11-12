@@ -10,6 +10,10 @@
     <p><b>Price: </b><%= "$#{ii.unit_price_to_dollars}" %></p>
     <p><b>Quantity: </b><%= ii.quantity %></p>
     <p><b>Status: </b><%= ii.status %><br>
+    <% if ii.discount? %>
+      <p><%= link_to "Show Discount", merchant_bulk_discount_path(@merchant, ii.return_best_discount) %></p>
+    <% end %>
+
     <%= form_with url: merchant_invoice_path(@merchant, @invoice), method: :patch, local: true do |f| %>
     <%= f.hidden_field :invoice_item_id, value: ii.id %>
     <%= f.label :status %><br>
