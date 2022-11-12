@@ -14,27 +14,32 @@ class InvoiceItem < ApplicationRecord
   end
 
   def discount?
-    bulk_discounts.order(percentage: :desc).where("quantity_threshold <= #{self.quantity}").exists?
+    bulk_discounts.order(percentage: :desc)
+    .where("quantity_threshold <= #{self.quantity}")
+    .exists?
   end
 
   def return_available_discounts
     if !self.discount?
       nil
     else
-      bulk_discounts.order(percentage: :desc).where("quantity_threshold <= #{self.quantity}")
+      bulk_discounts.order(percentage: :desc)
+      .where("quantity_threshold <= #{self.quantity}")
     end
   end
 
   def return_best_discount
-    if !self.discount?
+    if return_available_discounts.nil?
       nil
     else
-      bulk_discounts.order(percentage: :desc).where("quantity_threshold <= #{self.quantity}").first
+      bulk_discounts.order(percentage: :desc)
+      .where("quantity_threshold <= #{self.quantity}")
+      .first
     end
   end
 
   def invoice_item_revenue
-    if return_available_discounts.nil?
+    if return_best_discount.nil?
       (quantity * unit_price_to_dollars).round(2)
     else
       ((quantity * unit_price_to_dollars)*(1 -(return_best_discount.percentage.to_f/100))).round(2)

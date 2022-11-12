@@ -21,7 +21,7 @@ RSpec.describe 'Merchant Invoice Show Page' do
   end
 
   describe 'As a merchant' do
-    describe "When I visit my merchant's invoice show page(/merchants/merchant_id/invoices/invoice_id)" do
+    describe "When I visit my merchant's invoice show page(/merchants/merchant_id invoices/invoice_id)" do
       it "Then I see information related to that invoice including: Invoice id, Invoice status, Invoice created_at date in the format 'Monday, July 18, 2019', Customer first and last name" do
         visit "/merchants/#{@merchant1.id}/invoices/#{@invoice1.id}"
 
@@ -119,6 +119,35 @@ RSpec.describe 'Merchant Invoice Show Page' do
 
         within('#discounted_invoice_revenue') do
           expect(page).to have_content('Discounted Invoice Revenue: $2028.41')
+        end
+      end
+
+      it "Next to each invoice item I see a link to the show page for the bulk discount that was applied (if any)" do
+        visit "/merchants/#{@merchant1.id}/invoices/#{@invoice1.id}"
+        #  save_and_open_page
+
+        within("#i_item-#{@ii1.id}") do
+          expect(page).to_not have_link("Show Discount")
+        end
+
+        within("#i_item-#{@ii2.id}") do
+          expect(page).to have_link("Show Discount")
+        end
+
+      end
+
+      describe "When I click the link" do
+        it "Then I taken to the discount show page" do
+          discount2 = BulkDiscount.create!(name: "Test2", percentage: 8, quantity_threshold: 8, merchant: @merchant1)
+
+          visit "/merchants/#{@merchant1.id}/invoices/#{@invoice1.id}"
+
+          within("#i_item-#{@ii2.id}") do
+            click_link("Show Discount")
+          end
+
+          expect(current_path).to_not eq("/merchants/#{@merchant1.id}/bulk_discounts/#{discount2.id}")
+          expect(current_path).to eq("/merchants/#{@merchant1.id}/bulk_discounts/#{@discount1.id}")
         end
       end
     end
