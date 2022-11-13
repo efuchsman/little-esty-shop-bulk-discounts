@@ -16,7 +16,7 @@ RSpec.describe 'Merchant Item New Page' do
         visit "/merchants/#{@merchant1.id}/items"
 
         within('#new_item') do
-          expect(page).to have_link('Create a New Item')
+          expect(page).to have_link('New Item')
         end
       end
 
@@ -24,7 +24,7 @@ RSpec.describe 'Merchant Item New Page' do
         it 'I am taken to a form that allows me to add item information' do
           visit "/merchants/#{@merchant1.id}/items"
 
-          click_link('Create a New Item')
+          click_link('New Item')
 
           expect(current_path).to eq("/merchants/#{@merchant1.id}/items/new")
 
