@@ -87,6 +87,24 @@ RSpec.describe "Merchant Bulk Discount Index Page" do
           expect(page).to_not have_content("Quantity Required: 15")
         end
       end
+
+      describe "Holiday API call" do
+        it "Shows the name and date of the next 3 upcoming US holidays" do
+          holidays = HolidaySearch.new.upcoming_holidays
+          visit "/merchants/#{@merchant.id}/bulk_discounts"
+          # save_and_open_page
+
+          within("#upcoming_holidays") do
+            expect(page).to have_content("Upcoming Holidays:")
+            expect(page).to have_content("Holiday: #{holidays[0].local_name}")
+            expect(page).to have_content("Date: #{holidays[0].date}")
+            expect(page).to have_content("Holiday: #{holidays[1].local_name}")
+            expect(page).to have_content("Date: #{holidays[1].date}")
+            expect(page).to have_content("Holiday: #{holidays[2].local_name}")
+            expect(page).to have_content("Date: #{holidays[2].date}")
+          end
+        end
+      end
     end
   end
 end

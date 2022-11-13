@@ -11,3 +11,11 @@
       ______________________________
   </div>
 <% end %>
+
+<section id= "upcoming_holidays">
+  <h4>Upcoming Holidays:<h4>
+  <% @holidays.each do |holiday| %>
+    <p><b>Holiday: </b><%= holiday.local_name %></p>
+    <p><b>Date: </b><%= holiday.date %></p>
+  <% end %>
+</section>
