@@ -65,7 +65,7 @@ RSpec.describe Invoice, type: :model do
 
       @merchant = Merchant.create!(name: 'Test')
 
-      @discount1 = BulkDiscount.create!(name: "Test1", percentage: 10, quantity_threshold: 10, merchant: @merchant)
+      @discount1 = BulkDiscount.create!(name: "Test1", percentage: 15, quantity_threshold: 10, merchant: @merchant)
 
       @item_1 = Item.create!(name: 'item1', description: 'desc1', unit_price: 10, merchant_id: @merchant.id)
       @item_2 = Item.create!(name: 'item2', description: 'desc1', unit_price: 10, merchant_id: @merchant.id)
@@ -93,10 +93,17 @@ RSpec.describe Invoice, type: :model do
       end
     end
 
-    describe "#discounted_invoice_revenue" do
-      it "calculates the discounted total revenue of an invoice" do
+    describe "#invoice_discount" do
+      it "calculates the discounted total of an invoice" do
 
-        expect(@invoice_1.discounted_invoice_revenue).to eq(1.89)
+        expect(@invoice_1.invoice_discount_dollars).to eq(0.17)
+      end
+    end
+
+    describe "#discounted_total_revenue" do
+      it "takes the difference between total revenue and discount" do
+
+        expect(@invoice_1.discounted_total_revenue).to eq(1.83)
       end
     end
   end

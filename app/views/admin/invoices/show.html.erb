@@ -1,3 +1,5 @@
+<%= render "shared/admin_header" %>
+
 <h1>Id: <%= @invoice.id %></h1>
 <h2>Status: <%= @invoice.status %></h2>
 <h3>Created at: <%= @invoice.created_at.strftime("%A, %B %e, %Y") %></h3>
@@ -28,5 +30,9 @@
 <br>
 <h2>Total Revenue of All Items: $<%= @invoice.total_revenue_to_dollars %></h2>
 <div id= "discounted_invoice_revenue">
-  <p><b>Discounted Invoice Revenue: </b><%= "$#{@invoice.discounted_invoice_revenue}" %></p>
+  <% if @invoice.discounted_total_revenue != "N/A" %>
+    <p><b>Discounted Invoice Revenue: </b><%= "$#{@invoice.discounted_total_revenue}" %></p>
+    <% else %>
+    <p><b>Discounted Invoice Revenue: </b><%= "#{@invoice.discounted_total_revenue}" %></p>
+  <% end %>
 </div>

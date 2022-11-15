@@ -84,7 +84,7 @@ RSpec.describe 'Merchant Items Index Page' do
       it 'I see a list of names of all of my items and do not see items for any other merchant' do
         visit "/merchants/#{@merchant1.id}/items"
 
-        expect(page).to have_content("#{@merchant1.name} Inventory")
+        expect(page).to have_content("My Items")
 
         expect(page).to have_content('Items:')
         expect(page).to_not have_content('Bat-A-Rangs')

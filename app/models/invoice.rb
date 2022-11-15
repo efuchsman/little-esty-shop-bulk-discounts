@@ -22,7 +22,20 @@ class Invoice < ApplicationRecord
       .order(:created_at)
   end
 
-  def discounted_invoice_revenue
-    invoice_items.sum(&:invoice_item_revenue).round(2)
+  def invoice_discount_dollars
+    # invoice_items.sum(&:invoice_item_revenue).round(2)
+    invoice_items.joins(:bulk_discounts)
+    .where('invoice_items.quantity >= bulk_discounts.quantity_threshold')
+    .sum('invoice_items.quantity * (invoice_items.unit_price * .01) * (bulk_discounts.percentage * .01)')
+    .to_f
+    .round(2)
+  end
+
+  def discounted_total_revenue
+    if BulkDiscount.exists?
+    (total_revenue_to_dollars - invoice_discount_dollars).round(2)
+    else
+      return "N/A"
+    end
   end
 end

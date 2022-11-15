@@ -5,6 +5,8 @@ RSpec.describe 'Merchant Invoices Index page' do
     @merchant1 = Merchant.create!(name: 'Marvel')
     @customer1 = Customer.create!(first_name: 'Peter', last_name: 'Parker')
 
+    @discount1 = BulkDiscount.create!(name: "Test1", percentage: 10, quantity_threshold: 10, merchant: @merchant1)
+
     @item1 = Item.create!(name: 'Beanie Babies', description: 'Investments', unit_price: 100, merchant_id: @merchant1.id)
     @item2 = Item.create!(name: 'Bat-A-Rangs', description: 'Weapons', unit_price: 100, merchant_id: @merchant1.id)
 
