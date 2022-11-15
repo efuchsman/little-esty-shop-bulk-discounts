@@ -26,10 +26,7 @@ class Invoice < ApplicationRecord
     # invoice_items.sum(&:invoice_item_revenue).round(2)
     invoice_items.joins(:bulk_discounts)
     .where('invoice_items.quantity >= bulk_discounts.quantity_threshold')
-    .select('max(invoice_items.quantity * (invoice_items.unit_price * .01) * (bulk_discounts.percentage * .01)) as discount')
-    .group(:id)
-    .take
-    .discount
+    .sum('invoice_items.quantity * (invoice_items.unit_price * .01) * (bulk_discounts.percentage * .01)')
     .to_f
     .round(2)
   end
