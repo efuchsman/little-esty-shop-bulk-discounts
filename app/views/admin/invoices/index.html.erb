@@ -1,6 +1,6 @@
 <%= render "shared/admin_header" %>
 
-<h1>Admin Invoices Index</h1>
+<h1><center>Invoices<center></h1>
 <% @invoices.each do |invoice| %>
     <p><%=link_to "Visit Invoice #{invoice.id}", admin_invoice_path(invoice) %></p>
     <br>

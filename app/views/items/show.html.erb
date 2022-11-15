@@ -1,6 +1,8 @@
 <%= render "shared/merchant_header" %>
 
-<h3>Item Name: <%= @item.name %></h3>
-<h3>Description: <%= @item.description %></h3>
+<h3><center><%= @item.name %><center></h3>
+<div class="description_column">
+  <h3>Description: <%= @item.description %></h3>
+</div>
 <h3>Current Selling Price: <%= "$#{@item.item_unit_price_to_dollars}" %></h3>
 <p><%= link_to "Edit Information", "/merchants/#{@merchant.id}/items/#{@item.id}/edit" %></p>

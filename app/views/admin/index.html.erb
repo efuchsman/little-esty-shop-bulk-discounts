@@ -1,20 +1,25 @@
 <%= render "shared/admin_header" %>
 
-<h2>Top Customers</h2>
-
-<% @customers.each do |customer|%>
-<p><%= customer.full_name %>: <%= customer.success_count %> purchases</p>
-<% end %>
-
+<div class="display-columns">
+  <div class="left-column">
 <h2>Incomplete Invoices</h2>
 
 <section id="incomplete_invoices">
   <% @incomplete_invoices.each do |invoice| %>
-
     <p>Invoice #<%= link_to "#{invoice.id}", "/admin/invoices/#{invoice.id}" %>
     - <%= invoice.created_at.strftime("%A, %B %e, %Y") %></p>
   <% end %>
-</section>
+    </div>
+  </section>
+
+  <div class="right-column">
+  <h2>Top Customers</h2>
+    <% @customers.each do |customer|%>
+      <p><%= customer.full_name %>: <%= customer.success_count %> purchases</p>
+    <% end %>
+  </div>
+</div>
+
 
 
 
