@@ -24,7 +24,7 @@
     <img src="https://user-images.githubusercontent.com/101418582/201154904-c31757eb-e363-41bf-9c54-35730b8e2885.jpg" alt="Logo" width="400" height="200">
   </a>
 
-<h1 align="center">Little Esty Shop</h1>
+<h1 align="center">Little Esty Shop Bulk Discounts</h1>
 </div>
 
 <!-- ABOUT THE PROJECT -->
