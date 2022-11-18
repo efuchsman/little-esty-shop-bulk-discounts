@@ -30,7 +30,7 @@
 <!-- ABOUT THE PROJECT -->
 ## About The Project
 
-"Little Esty Shop" is a group project that builds a fictitious e-commerce platform where merchants and admins can manage inventory and fulfill customer invoices. Learning goals included practice designing a normalized database schema and defining model relationships, utilizing advanced routing techniques, utilizing advanced Active Record techniques to perform complex database queries, and practice consuming a public API to apply OOP principles to organize code.
+"Little Esty Shop Bulk Discounts" is a solo project that branches on Little-Esty_shop, which was group project that builds a fictitious e-commerce platform where merchants and admins can manage inventory and fulfill customer invoices. Bulk Discounts allows for merchants and admins to create discounts for items on an invoice that surpass a given quantity threshold. It will then calculate the total discounted revenue of an invoice as well as the undiscounted revenue. Learning goals included practice designing a normalized database schema and defining model relationships, utilizing advanced routing techniques, utilizing advanced Active Record techniques to perform complex database queries, and practice consuming a public API to apply OOP principles to organize code.
 
 ### Built With
 
