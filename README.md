@@ -40,7 +40,7 @@
 <!-- GETTING STARTED -->
 ## Getting Started
 
-[https://cryptic-bastion-43446.herokuapp.com/](https://cryptic-bastion-43446.herokuapp.com/)
+https://lit-ridge-82956.herokuapp.com/
 
 <!-- Relationships -->
 ## Relationships
