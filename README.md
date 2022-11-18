@@ -1,4 +1,4 @@
-<a name="Little-Esty-Shop"></a>
+<a name="Little-Esty-Shop-Bulk-Discounts"></a>
 
 <!-- PROJECT SHIELDS -->
 <!--
@@ -47,20 +47,6 @@
 
 <img src="https://user-images.githubusercontent.com/101418582/201155262-79d365b7-92e9-404d-a52f-b1480d2c096d.png" alt="Diagram">
 
-<!-- CONTACT -->
-## Contact
-
-Bryan K. - [https://github.com/bkeener7](https://github.com/bkeener7)
-
-Darby S. - [https://github.com/DarbySmith](https://github.com/DarbySmith)
-
-Eli F. - [https://github.com/efuchsman](https://github.com/efuchsman)
-
-James W. - [https://github.com/James-E-White](https://github.com/James-E-White)
-
-William L. - [https://github.com/WilliamLampke](https://github.com/WilliamLampke)
-
-Project Link: [https://github.com/DarbySmith/little-esty-shop](https://github.com/DarbySmith/little-esty-shop)
 
 <!-- ACKNOWLEDGMENTS -->
 ## Acknowledgments
